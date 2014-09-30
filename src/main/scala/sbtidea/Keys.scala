@@ -4,10 +4,10 @@ import sbt._
 
 object Keys {
 
-  lazy val exportedRunConfigurations = SettingKey[Seq[Project]]("run configurations of which projects should be exported to idea")
+  lazy val exportRunConfiguration = SettingKey[Boolean]("defines whether run configuration of a project should be exported to idea")
   lazy val artifactRunDependencies   = SettingKey[Seq[String]]("which artifacts should be built before running an idea configuration")
 
-  exportedRunConfigurations := Seq()
+  exportRunConfiguration  := false
   artifactRunDependencies := Seq()
 
   val SbtIdea = config("sbtidea")
