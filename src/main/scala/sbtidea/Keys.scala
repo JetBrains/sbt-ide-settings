@@ -4,13 +4,13 @@ import sbt._
 
 object Keys {
 
-  lazy val exportRunConfiguration  = SettingKey[Boolean]("defines whether run configuration of a project should be exported to idea")
-  lazy val artifactRunDependencies = SettingKey[Seq[String]]("which artifacts should be built before running an idea configuration")
-  lazy val testInPackage = SettingKey[String]("which package to run tests in in exported configuration")
+  lazy val exportRunConfiguration  = settingKey[Boolean]("defines whether run configuration of a project should be exported to Idea")
+  lazy val exportTestConfiguration = settingKey[Boolean]("defines whether test configuration of a project should be exported to Idea")
+  lazy val unmanagedLibrarySources = settingKey[Option[Seq[String]]]("set of sources for unmanaged libraries in Idea VirtualFile format")
 
   exportRunConfiguration  := false
-  artifactRunDependencies := Seq()
-  testInPackage := ""
+  exportTestConfiguration := false
+  unmanagedLibrarySources := None
 
   val SbtIdea = config("sbtidea")
 }
