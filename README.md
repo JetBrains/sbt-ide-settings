@@ -1,19 +1,16 @@
-SBT plugin to export Intellij Idea setings
-============================================
+# SBT plugin for tweaking various IDE settings
 
-Plugin provides several keys to be read by [sbt-structure](https://github.com/JetBrains/sbt-structure) plugin and imported 
-as respective settings into generated Idea project.
+This plugin provides several keys to be read by IDE while importing project. Currently SBT 0.13 only.
 
-Plugin usage
------
+## Usage
 
-`exportRunConfiguration`
-- Set to `true` in project which you want to export run configuration from
+1. Add the following lines to `project/plugins.sbt`:
 
+```Scala
+resolvers += Resolver.url("jetbrains-bintray",
+  url("http://dl.bintray.com/jetrains/sbt-plugins/"))(Resolver.ivyStylePatterns)
 
-`artifactRunDependencies`
-- List of artifact names which need to be built before running a configuration
+addSbtPlugin("org.jetbrains" % "sbt-ide-settings" % "0.0.1")
+```
 
-
-`testInPackage`
-- Set to export scalatest run configuration as Idea "Run in package" test run configuration
+2. Put `ideDefaultSettings` in your build.sbt and then tweak any settings you want

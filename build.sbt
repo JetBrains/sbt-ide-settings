@@ -1,21 +1,17 @@
 import bintray.Keys._
 
-sbtPlugin := true
+val commonSettings = Seq(
+  sbtPlugin := true,
+  name := "sbt-ide-settings",
+  organization := "org.jetbrains",
+  licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+  scalaVersion := "2.10.4"
+)
 
-name := "sbt-idea-config"
+val publishSettings = bintrayPublishSettings ++ Seq(
+  publishMavenStyle := false,
+  repository in bintray := "sbt-plugins",
+  bintrayOrganization in bintray := Some("jetbrains")
+)
 
-organization := "org.jetbrains"
-
-version := "0.0.1"
-
-licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-
-scalaVersion := "2.10.4"
-
-publishMavenStyle := false
-
-bintrayPublishSettings
-
-repository in bintray := "sbt-idea-config"
-
-bintrayOrganization in bintray := None
+commonSettings ++ publishSettings
