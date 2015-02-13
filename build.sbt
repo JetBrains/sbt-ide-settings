@@ -14,4 +14,8 @@ val publishSettings = bintrayPublishSettings ++ Seq(
   bintrayOrganization in bintray := Some("jetbrains")
 )
 
-commonSettings ++ publishSettings
+val gitSettings = versionWithGit ++ Seq(
+  git.baseVersion := "0.0"
+)
+
+commonSettings ++ publishSettings ++ gitSettings
