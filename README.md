@@ -20,14 +20,18 @@ SBT 0.13.5 and up.
 
 ## Available settings
 
-- `ideExcludedDirectories`
+- `ideExcludedDirectories :: Seq[File]`
 
   List of directories to be marked as excluded in IDE.
 
-- `ideBasePackages`
+- `ideBasePackages :: Seq[String]`
 
   List of packages to be used as base prefixes for chaining. Packages starting
   with one of these prefixes will be chained automatically in IDE.
+
+- `ideSkipProject :: Boolean`
+  
+  Flag indicating that current subproject should be skipped from importing.
 
 ## Upcoming settings
 
