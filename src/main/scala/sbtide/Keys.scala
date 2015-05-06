@@ -8,4 +8,6 @@ object Keys {
     "List of paths to automatically exclude in IDE")
   lazy val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages",
     "List of packages to be used as prefixes in package chaining")
+  lazy val ideSkipProject = SettingKey[Boolean]("ide-skip-project",
+    "Flag indicating that current subproject should be skipped from importing")
 }
