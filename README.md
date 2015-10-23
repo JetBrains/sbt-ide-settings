@@ -37,15 +37,3 @@ SBT 0.13.5 and up.
 
   Directory to use for production and test output instead of SBT's `target`
   directory.
-
-## Upcoming settings
-
-- `ideExportRunConfiguration`
-
-  Indicates whether run configuration of selected project should or should not
-  be exported
-
-- `ideExportTestConfiguration`
-
-  Indicates whether test configuration of selected project should or should not
-  be exported
