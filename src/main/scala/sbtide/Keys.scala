@@ -10,4 +10,6 @@ object Keys {
     "List of packages to be used as prefixes in package chaining")
   lazy val ideSkipProject = SettingKey[Boolean]("ide-skip-project",
     "Flag indicating that current subproject should be skipped from importing")
+  lazy val ideOutputDirectory = SettingKey[Option[File]]("ide-output-directory",
+    "Directory to use for production and test output instead of SBT's `target` directory")
 }

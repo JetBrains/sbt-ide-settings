@@ -30,8 +30,13 @@ SBT 0.13.5 and up.
   with one of these prefixes will be chained automatically in IDE.
 
 - `ideSkipProject :: Boolean`
-  
+
   Flag indicating that current subproject should be skipped from importing.
+
+- `ideOutputDirectory :: Option[File]`
+
+  Directory to use for production and test output instead of SBT's `target`
+  directory.
 
 ## Upcoming settings
 
