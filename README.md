@@ -1,6 +1,7 @@
 # SBT plugin for tweaking various IDE settings
 
 [ ![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-ide-settings/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-ide-settings/_latestVersion)
+[![Build Status](https://travis-ci.org/JetBrains/sbt-ide-settings.svg?branch=master)](https://travis-ci.org/JetBrains/sbt-ide-settings)
 
 This plugin provides several keys to be read by IDE while importing project.
 Available for sbt 0.13.5+ and 1.0
