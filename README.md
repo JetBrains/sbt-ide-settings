@@ -1,18 +1,18 @@
-# SBT plugin for tweaking various IDE settings
+# SBT plugin for configuring IDE settings
 
 [ ![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-ide-settings/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-ide-settings/_latestVersion)
 [![Build Status](https://travis-ci.org/JetBrains/sbt-ide-settings.svg?branch=master)](https://travis-ci.org/JetBrains/sbt-ide-settings)
 [![JetBrains team project](http://jb.gg/badges/team.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
-This plugin provides several keys to be read by IDE while importing project.
-Available for sbt 0.13.5+ and 1.0
+This plugin provides keys to configure IDE settings.
+Available for sbt 0.13.5+ and 1.0+
 
 ## Usage
 
 1. Add the following lines to `project/plugins.sbt`:
 
  ```Scala
- addSbtPlugin("org.jetbrains" % "sbt-ide-settings" % "1.0.0")
+ addSbtPlugin("org.jetbrains" % "sbt-ide-settings" % "1.1.0")
  ```
 
 2. Tweak any settings you want
@@ -22,6 +22,11 @@ Available for sbt 0.13.5+ and 1.0
 - `ideExcludedDirectories : Seq[File]`
 
   List of directories to be marked as excluded in IDE.
+
+- `idePackagePrefix : String`
+
+  If package prefix is `org.example.application`, a `PATH` is a source directory implies `org/example/application/PATH`,
+  so you don't have to create `org`, `example`, and `application` subdirectories ([more info](https://www.jetbrains.com/help/idea/content-roots.html#assign_package_prefix)).
 
 - `ideBasePackages : Seq[String]`
 
