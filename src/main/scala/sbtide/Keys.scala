@@ -6,7 +6,7 @@ import sbt.Keys._
 object Keys {
   lazy val ideExcludedDirectories = SettingKey[Seq[File]]("ide-excluded-directories",
     "List of paths to automatically exclude in IDE")
-  lazy val idePackagePrefix = SettingKey[String]("ide-package-prefix",
+  lazy val idePackagePrefix = SettingKey[Option[String]]("ide-package-prefix",
     "If package prefix is org.example.application, a PATH is a source directory implies org/example/application/PATH, so you don't have to create explicit org, example, and application subdirectories.")
   lazy val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages",
     "List of packages to be used as prefixes in package chaining")

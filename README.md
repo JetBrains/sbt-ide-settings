@@ -23,7 +23,7 @@ Available for sbt 0.13.5+ and 1.0+
 
   List of directories to be marked as excluded in IDE.
 
-- `idePackagePrefix : String`
+- `idePackagePrefix : Option[String]`
 
   If package prefix is `org.example.application`, a `PATH` is a source directory implies `org/example/application/PATH`,
   so you don't have to create `org`, `example`, and `application` subdirectories ([more info](https://www.jetbrains.com/help/idea/content-roots.html#assign_package_prefix)).
@@ -49,6 +49,7 @@ They can be added to a project as a setting without including this plugin in the
 
 ```scala
 SettingKey[Seq[File]]("ide-excluded-directories") := Seq(file("some/file"))
+SettingKey[Option[String]]("ide-package-prefix") := Option("org.example.application")
 SettingKey[Seq[String]]("ide-base-packages") := Seq("package1", "package2")
 SettingKey[Boolean]("ide-skip-project") := true
 SettingKey[Option[File]]("ide-output-directory") := Option(file("some/file"))
