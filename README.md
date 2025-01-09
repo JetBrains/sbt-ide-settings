@@ -1,5 +1,6 @@
 # SBT plugin for configuring IDE settings
 
+[![Version](https://index.scala-lang.org/jetbrains/sbt-ide-settings/sbt-ide-settings/latest.svg)](https://index.scala-lang.org/jetbrains/sbt-ide-settings/sbt-ide-settings)
 [![Build Status](https://travis-ci.org/JetBrains/sbt-ide-settings.svg?branch=master)](https://travis-ci.org/JetBrains/sbt-ide-settings)
 [![JetBrains team project](http://jb.gg/badges/team.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
