@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: sbt-ide-settings build & publishLocal
 
 on:
   push:
@@ -7,15 +7,17 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build_and_publish_local:
+    name: sbt-ide-settings plugin Build & Publish Local
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
-          java-version: 17
           distribution: temurin
+          java-version: 17
           cache: sbt
-      - name: Build
+      - uses: sbt/setup-sbt@v1
+      - uses: coursier/cache-action@v6
+      - name: Compile & Publish Local
         run: sbt +publishLocal
