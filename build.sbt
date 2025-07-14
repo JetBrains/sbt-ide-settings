@@ -2,12 +2,11 @@ import sbt.Keys.name
 import sbt.internal.sona
 import sbt.librarymanagement.ivy.Credentials
 
-ThisBuild / organization := "org.jetbrains"
+ThisBuild / organization := "org.jetbrains.scala"
 
 // Optional but nice-to-have
 ThisBuild / organizationName     := "JetBrains"
 ThisBuild / organizationHomepage := Some(url("https://www.jetbrains.com/"))
-
 
 ThisBuild / licenses ++= Seq(
   ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
@@ -66,9 +65,8 @@ val root = project.in(file("."))
   .settings(
     sbtPlugin := true,
     name := "sbt-ide-settings",
-    organization := "org.jetbrains.scala",
 
-    // publishing boilerplate,
+    // cross-build boilerplate,
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
     crossScalaVersions := Seq("2.12.18", "2.10.7"),
     pluginCrossBuild / sbtVersion := {
