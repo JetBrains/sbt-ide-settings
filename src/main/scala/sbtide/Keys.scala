@@ -4,6 +4,10 @@ import sbt._
 import sbt.Keys._
 
 object Keys {
+  // NOTE: this key is the same as in org.jetbrains.sbt.extractors.SettingKeys
+  // It's read from inside the sbt structure extractor
+  // TODO: add more explanation comments for that
+  // TODO: avoid a warning that the key is unused when you set some excluded directories
   lazy val ideExcludedDirectories = SettingKey[Seq[File]]("ide-excluded-directories",
     "List of paths to automatically exclude in IDE")
   lazy val idePackagePrefix = SettingKey[Option[String]]("ide-package-prefix",
