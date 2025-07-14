@@ -32,37 +32,7 @@ ThisBuild / developers := List(
   )
 )
 
-val SonatypeRepoName = "Sonatype Nexus Repository Manager"
-
-lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
-  // new setting for the Central Portal
-  ThisBuild / publishTo := {
-    val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-    if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
-    else localStaging.value
-  },
-
-  // Overwrite/filter-out existing credentials
-  // Use copy of `sbt.internal.SysProp.sonatypeCredentalsEnv` but with custom environment variables
-  credentials := credentials.value.filter {
-    case c: DirectCredentials => c.realm != SonatypeRepoName
-    case _ => true
-  } ++ {
-    val env = sys.env.get(_)
-    for {
-      username <- env("SONATYPE_USERNAME_NEW")
-      password <- env("SONATYPE_PASSWORD_NEW")
-    } yield Credentials(
-      SonatypeRepoName,
-      sona.Sona.host,
-      username,
-      password
-    )
-  },
-)
-
 val root = project.in(file("."))
-  .settings(CommonSonatypeSettings)
   .settings(
     sbtPlugin := true,
     name := "sbt-ide-settings",
