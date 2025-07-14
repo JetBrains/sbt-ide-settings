@@ -12,7 +12,7 @@ Available for sbt 0.13.5+ and 1.0+
 1. Add the following lines to `project/plugins.sbt`:
 
  ```Scala
- addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.1")
+ addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.3")
  ```
 
 2. Tweak any settings you want
