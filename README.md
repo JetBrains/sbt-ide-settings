@@ -7,7 +7,7 @@
 This plugin provides keys to configure IDE settings.
 Available for sbt 0.13.5+ and 1.0+
 
-## Usage
+## Usage (per-project configuration)
 
 1. Add the following lines to `project/plugins.sbt`:
 
@@ -15,7 +15,47 @@ Available for sbt 0.13.5+ and 1.0+
  addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.3")
  ```
 
-2. Tweak any settings you want
+2. in the project ``*.scala`` or ``*.sbt`` file:
+
+```Scala
+     settings(
+         ideExcludedDirectories := Seq(
+           baseDirectory.value / ".ensime_cache",
+           baseDirectory.value / ".idea")
+     )
+```
+
+3. Tweak any settings you want
+
+## Usage (global configuration for all projects)
+
+1. Add the following lines to `~/.sbt/0.13/plugins/plugins.sbt`:
+
+```Scala
+ resolvers += Resolver.url("jetbrains-bintray",
+   url("http://dl.bintray.com/jetbrains/sbt-plugins/"))(Resolver.ivyStylePatterns)
+
+ addSbtPlugin("org.jetbrains" % "sbt-ide-settings" % "<version>")
+```
+
+2. Add the following lines to a new file `~/.sbt/0.13/plugins/sbt-idea-config.scala`:
+
+```Scala
+import sbt._
+import Keys._
+
+object IDEAConfig extends Plugin {
+
+  override def settings = Seq(
+    sbtide.Keys.ideExcludedDirectories := Seq(
+      baseDirectory.value / ".ensime_cache",
+      baseDirectory.value / ".idea")
+  )
+
+}
+```
+
+3. Tweak any settings you want
 
 ## Available settings
 
