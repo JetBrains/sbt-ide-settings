@@ -68,6 +68,7 @@ val root = project.in(file("."))
     },
 
     scriptedLaunchOpts += s"-Dplugin.version=${version.value}",
+    scriptedLaunchOpts ++= sys.props.get("sbt.ivy.home").map(v => s"-Dsbt.ivy.home=$v").toSeq,
     scriptedLaunchOpts ++= {
       scalaBinaryVersion.value match {
         case "2.10" => Seq("-Djava.security.manager=allow")
