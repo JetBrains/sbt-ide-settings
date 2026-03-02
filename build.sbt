@@ -40,6 +40,13 @@ val root = project.in(file("."))
     sbtPlugin := true,
     name := "sbt-ide-settings",
 
+    scalacOptions ++= {
+      scalaBinaryVersion.value match {
+        case "2.12" => Seq("--release", "8")
+        case _      => Seq.empty
+      }
+    },
+
     // cross-build boilerplate,
     crossScalaVersions := Seq("2.12.21", "2.10.7"),
     pluginCrossBuild / sbtVersion := {
