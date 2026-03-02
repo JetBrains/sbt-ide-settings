@@ -41,7 +41,7 @@ val root = project.in(file("."))
 
     // cross-build boilerplate,
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
-    crossScalaVersions := Seq("2.12.18", "2.10.7"),
+    crossScalaVersions := Seq("2.12.21", "2.10.7"),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049,
       scalaBinaryVersion.value match {
