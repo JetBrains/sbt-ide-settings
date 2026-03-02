@@ -1,18 +1,17 @@
 # SBT plugin for configuring IDE settings
 
 [![Version](https://index.scala-lang.org/jetbrains/sbt-ide-settings/sbt-ide-settings/latest.svg)](https://index.scala-lang.org/jetbrains/sbt-ide-settings/sbt-ide-settings)
-[![Build Status](https://travis-ci.org/JetBrains/sbt-ide-settings.svg?branch=master)](https://travis-ci.org/JetBrains/sbt-ide-settings)
 [![JetBrains team project](http://jb.gg/badges/team.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
 This plugin provides keys to configure IDE settings.
-Available for sbt 0.13.5+ and 1.0+
+Available for sbt 0.13.5+, sbt 1.x and sbt 2.
 
 ## Usage
 
 1. Add the following lines to `project/plugins.sbt`:
 
  ```Scala
- addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.3")
+ addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.4")
  ```
 
 2. Tweak any settings you want
