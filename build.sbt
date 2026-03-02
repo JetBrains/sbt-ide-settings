@@ -34,13 +34,13 @@ lazy val PublishingSettings: Seq[Def.Setting[?]] = Seq(
 )
 
 val root = project.in(file("."))
+  .enablePlugins(ScriptedPlugin)
   .settings(PublishingSettings)
   .settings(
     sbtPlugin := true,
     name := "sbt-ide-settings",
 
     // cross-build boilerplate,
-    crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
     crossScalaVersions := Seq("2.12.21", "2.10.7"),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049,
@@ -49,4 +49,14 @@ val root = project.in(file("."))
         case "2.12" => "1.0.0"
       }
     },
+
+    scriptedSbt := {
+      scalaBinaryVersion.value match {
+        case "2.10" => "0.13.18"
+        case "2.12" => "1.12.5"
+      }
+    },
+
+    scriptedLaunchOpts += s"-Dplugin.version=${version.value}",
+    scriptedBufferLog := false
   )
