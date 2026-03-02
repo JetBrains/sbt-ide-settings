@@ -1,5 +1,6 @@
 lazy val root = project.in(file("."))
   .settings(
+    scalaVersion := "2.12.21",
     ideExcludedDirectories := Seq(baseDirectory.value / "excluded"),
     idePackagePrefix := Some("org.example"),
     ideBasePackages := Seq("org.example"),
