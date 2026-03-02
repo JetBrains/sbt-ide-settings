@@ -68,5 +68,11 @@ val root = project.in(file("."))
     },
 
     scriptedLaunchOpts += s"-Dplugin.version=${version.value}",
+    scriptedLaunchOpts ++= {
+      scalaBinaryVersion.value match {
+        case "2.10" => Seq("-Djava.security.manager=allow")
+        case _      => Seq.empty
+      }
+    },
     scriptedBufferLog := false
   )
