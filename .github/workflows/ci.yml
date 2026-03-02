@@ -1,4 +1,4 @@
-name: sbt-ide-settings build & publishLocal
+name: sbt-ide-settings build & run scripted tests
 
 on:
   push:
@@ -8,16 +8,16 @@ on:
 
 jobs:
   build_and_publish_local:
-    name: sbt-ide-settings plugin Build & Publish Local
+    name: sbt-ide-settings plugin Build & Run Scripted Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
           cache: sbt
       - uses: sbt/setup-sbt@v1
-      - uses: coursier/cache-action@v6
+      - uses: coursier/cache-action@v8
       - name: Run scripted tests
         run: sbt +scripted
