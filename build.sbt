@@ -46,7 +46,7 @@ val root = project.in(file("."))
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049,
       scalaBinaryVersion.value match {
         case "2.10" => "0.13.17"
-        case "2.12" => "1.2.1"
+        case "2.12" => "1.0.0"
       }
     },
   )
