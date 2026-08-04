@@ -63,7 +63,7 @@ val root = project.in(file("."))
       scalaBinaryVersion.value match {
         case "2.10" => "0.13.18"
         case "2.12" => "1.12.14"
-        case "3"    => "2.0.4"
+        case "3"    => "2.0.5"
       }
     },
 
