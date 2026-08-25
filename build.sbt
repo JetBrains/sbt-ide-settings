@@ -62,8 +62,8 @@ val root = project.in(file("."))
     scriptedSbt := {
       scalaBinaryVersion.value match {
         case "2.10" => "0.13.18"
-        case "2.12" => "1.12.15"
-        case "3"    => "2.0.6"
+        case "2.12" => "1.13.0"
+        case "3"    => "2.0.7"
       }
     },
 
