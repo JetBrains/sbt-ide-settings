@@ -3,7 +3,7 @@ import sbt.url
 
 // Updated automatically by .github/workflows/update-scripted-sbt.yml, which relies on these names
 val ScriptedSbt1Version = "1.13.0"
-val ScriptedSbt2Version = "2.1.0-M2"
+val ScriptedSbt2Version = "2.1.0-M3"
 
 lazy val PublishingSettings: Seq[Def.Setting[?]] = Seq(
   organization := "org.jetbrains.scala",
