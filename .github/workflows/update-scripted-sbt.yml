@@ -1,0 +1,113 @@
+name: Update scripted sbt versions
+
+on:
+  schedule:
+    # Daily, away from the start of the hour when GitHub Actions is under the highest load
+    - cron: '23 9 * * *'
+      timezone: Europe/Amsterdam
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  detect:
+    name: Detect new sbt releases
+    runs-on: ubuntu-latest
+    outputs:
+      update: ${{ steps.detect.outputs.update }}
+      sbt1: ${{ steps.detect.outputs.sbt1 }}
+      sbt2: ${{ steps.detect.outputs.sbt2 }}
+      branch: ${{ steps.detect.outputs.branch }}
+      message: ${{ steps.detect.outputs.message }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Compare the latest sbt releases with the scripted sbt versions
+        id: detect
+        run: |
+          # Both sbt 1.x and sbt 2.x are published as org.scala-sbt:sbt
+          versions=$(curl -fsSL https://repo1.maven.org/maven2/org/scala-sbt/sbt/maven-metadata.xml | grep -oP '(?<=<version>)[^<]+')
+
+          # The highest stable, RC or milestone release of the given sbt major version.
+          # Alphas and one-off builds (e.g. 1.7.0-M2-6810fix) are excluded.
+          # Replacing "-" with "~" makes `sort -V` order 1.14.0-M1 < 1.14.0-RC1 < 1.14.0.
+          latest() {
+            grep -E "^$1\.[0-9]+\.[0-9]+(-(M|RC)[0-9]+)?$" <<< "$versions" | sed 's/-/~/' | sort -V | sed 's/~/-/' | tail -n1
+          }
+
+          # The scripted sbt version of the given sbt major version in build.sbt
+          current() {
+            sed -nE "s/^val ScriptedSbt$1Version = \"([^\"]+)\"$/\1/p" build.sbt
+          }
+
+          sbt1=$(latest 1)
+          sbt2=$(latest 2)
+          current1=$(current 1)
+          current2=$(current 2)
+          if [[ -z "$sbt1" || -z "$sbt2" || -z "$current1" || -z "$current2" ]]; then
+            echo "::error::Could not determine the sbt versions (latest: '$sbt1', '$sbt2'; build.sbt: '$current1', '$current2')"
+            exit 1
+          fi
+
+          updated=()
+          if [[ "$sbt1" != "$current1" ]]; then updated+=("sbt $sbt1"); fi
+          if [[ "$sbt2" != "$current2" ]]; then updated+=("sbt $sbt2"); fi
+          branch="scripted-sbt-$sbt1-$sbt2"
+
+          if [[ ${#updated[@]} -eq 0 ]]; then
+            echo "The scripted sbt versions are up to date: sbt $sbt1 and sbt $sbt2" | tee -a "$GITHUB_STEP_SUMMARY"
+          elif git ls-remote --exit-code --heads origin "refs/heads/$branch" > /dev/null; then
+            echo "Branch $branch already exists" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            message="Run scripted tests against ${updated[0]}${updated[1]:+ and ${updated[1]}}"
+            echo "$message" | tee -a "$GITHUB_STEP_SUMMARY"
+            {
+              echo "update=true"
+              echo "sbt1=$sbt1"
+              echo "sbt2=$sbt2"
+              echo "branch=$branch"
+              echo "message=$message"
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+  update:
+    name: Update scripted sbt versions, test and push
+    needs: detect
+    if: needs.detect.outputs.update == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SBT1: ${{ needs.detect.outputs.sbt1 }}
+      SBT2: ${{ needs.detect.outputs.sbt2 }}
+      BRANCH: ${{ needs.detect.outputs.branch }}
+      MESSAGE: ${{ needs.detect.outputs.message }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: sbt
+      - uses: sbt/setup-sbt@v1
+      - name: Update the scripted sbt versions
+        run: |
+          sed -Ei "s/^(val ScriptedSbt1Version = \")[^\"]+/\1$SBT1/; s/^(val ScriptedSbt2Version = \")[^\"]+/\1$SBT2/" build.sbt
+          if git diff --quiet build.sbt; then
+            echo "::error file=build.sbt::The scripted sbt versions were not updated"
+            exit 1
+          fi
+          git diff build.sbt
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "$MESSAGE" build.sbt
+      - name: Run scripted tests
+        run: sbt +scripted
+      - name: Push the branch
+        run: |
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "Scripted tests passed. [Open a pull request]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/$GITHUB_REF_NAME...$BRANCH?expand=1) for \`$BRANCH\`." >> "$GITHUB_STEP_SUMMARY"
