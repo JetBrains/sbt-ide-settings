@@ -2,8 +2,8 @@ import sbt.Keys.name
 import sbt.url
 
 // Updated automatically by .github/workflows/update-scripted-sbt.yml, which relies on these names
-val ScriptedSbt1Version = "1.13.0"
-val ScriptedSbt2Version = "2.1.0-RC1"
+val ScriptedSbt1Version = "1.13.1"
+val ScriptedSbt2Version = "2.1.0-RC2"
 
 lazy val PublishingSettings: Seq[Def.Setting[?]] = Seq(
   organization := "org.jetbrains.scala",
