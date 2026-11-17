@@ -46,20 +46,21 @@ val root = project.in(file("."))
 
     scalacOptions ++= {
       scalaBinaryVersion.value match {
-        case "2.12" => Seq("--release", "8")
+        case "2.12" => Seq("-Xsource:3", "--release", "8")
         case "3"    => Seq("--release", "17")
         case _      => Seq.empty
       }
     },
 
     // cross-build boilerplate,
-    crossScalaVersions := Seq("2.12.21", "2.10.7", "3.8.2"),
+    scalaVersion := "2.12.21",
+    crossScalaVersions := Seq("2.12.21", "2.10.7", "3.9.0"),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049,
       scalaBinaryVersion.value match {
         case "2.10" => "0.13.17"
         case "2.12" => "1.0.0"
-        case "3"    => "2.0.0-RC9"
+        case "3"    => "2.1.0"
       }
     },
 
